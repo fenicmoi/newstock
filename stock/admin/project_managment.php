@@ -8,23 +8,25 @@
         $result = dbQuery($sql);
         $num = dbNumRows($result);
         $num++;
+
         $name = $_POST['prj_name'];
         $money = $_POST['money'];
-        $uid = $_POST['sel_office'];
+        $dep_id = $_POST['sel_office'];
         $owner = $_POST['owner'];    //งบจังหวัด
         
 
-        $sql = "INSERT INTO project(recid, name, money, yid, uid, owner) VALUES($num, '$name', $money, $yid, '$uid', '$owner')";
-       // print $sql;
+        $sql = "INSERT INTO project(recid, name, money, yid, uid, owner) VALUES($num, '$name', $money, $yid, '$dep_id', '$owner')";
+        print $sql;
         $result =  dbQuery($sql);
 
+        /*
         if($result){
             echo "<script>alert('บันทึกโครงการเรียบร้อยแล้ว')</script>";
             echo "<META HTTP-EQUIV='Refresh' Content='0'; URL='?menu=project'>";
         }else{
             echo "<script>alert('มีบางอย่างผิดพลาด  กรุณาติดต่อ Admin')</script>";
         }
-    
+        */
     }
 
     //แก้ไข project 
