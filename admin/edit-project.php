@@ -10,9 +10,11 @@
 include("../library/database.php");
 include("function.php");
 $pid = $_POST['pid'];
-echo "hellojava";
+//echo "hellojava";
 
-$sql = "SELECT * FROM project WHERE pid = $pid";
+$sql = "SELECT p.*, d.dep_name FROM project as p
+        INNER JOIN  depart as d  ON (p.dep_id = d.dep_id)
+        WHERE pid = $pid";
 $result = dbQuery($sql);
 $row = dbFetchAssoc($result);
 
@@ -43,31 +45,34 @@ $resultYear = dbQuery($sqlYear);
                 </div>
 
                 <div class="form-group">
-                        <div class="input-group-addon">
-                            <span class="input-group-addon">ชื่อโครงการ</span>
-                            <input type="text" name="prj_name" id="prj_name" class="form-control" title="เพิ่มชื่อโครงการ" value="<?=$row['name'];?>">
-                        </div>
+                    <div class="input-group">
+                        <span class="input-group-addon">ชื่อโครงการ</span>
+                        <input type="text" name="prj_name" id="prj_name" class="form-control" title="เพิ่มชื่อโครงการ" value="<?=$row['name'];?>">                            
+                    </div>
                 </div>
 
-                    <div class="form-group">            
-                        <div class="input-group mb3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">งบประมาณ</span>
-                            </div>
-                            <input type="number" name="money" id="money" class="form-control" value="<?=$row['money'];?>" title="เพิ่มชื่อโครงการ">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">บาท</span>
-                            </div>
-                        </div>
+                <div class="form-group">            
+                    <div class="input-group">
+                        <span class="input-group-addon">งบประมาณ</span>
+                        <input type="number" name="money" id="money" class="form-control" value="<?=$row['money'];?>" title="เพิ่มชื่อโครงการ">
+                        <span class="input-group-addon">บาท</span>                     
                     </div>
-                    <div class="form-group">            
-                        <div class="input-group mb3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">หน่วยรับผิดชอบ</span>
-                            </div>
-                            <input type="text" name="sel_office" id="sel_office" class="form-control" value="<?=$row['uid'];?>">
-                        </div>
+                </div>
+                <?php  //เลือกหน่วยรับผิดชอบ 
+                    $sql = "SELECT * FROM depart ORDER BY dep_id ASC";
+                    $result = dbQuery($sql);
+                ?>
+                <div class="form-group">            
+                    <div class="input-group">                         
+                        <span class="input-group-addon">หน่วยรับผิดชอบ</span>   
+                        <select class="form-control" name="sel_office" id="sel_office"  required> 
+                            <?php 
+                                 while ($row = dbFetchArray($result)) { ?>
+                                    <option value='<?php echo $row['dep_id'];?>'><?php echo $row['dep_name'];?></option>
+                                 <?php } ?>
+                        </select>                        
                     </div>
+                </div>
 
                     <input type="hidden" name="pid" id="pid" value="<?=$pid;?>">
                     </div>
