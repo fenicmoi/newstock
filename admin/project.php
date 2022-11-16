@@ -174,7 +174,7 @@ $(document).ready(function(){
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                        <select class="form-control" name="sel_office" id="sel_office"  required> 
+                                        <select class="" name="sel_office" id="sel_office"  required> 
                                             <option></option>
                                         </select>
                                         <p class="form-text text-muted">

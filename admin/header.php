@@ -65,9 +65,10 @@ if($u_id){
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/function.js"></script>
     
-    <link rel="stylesheet" href="../css/sweetalert.css">
+    <!-- <link rel="stylesheet" href="../css/sweetalert.css">
     <script src="../js/sweetalert.min.js"></script>
-    <script src="app.js"></script>
+    <script src="app.js"></script> -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
      <!-- DateTimePicket -->
      <script src="../js/jquery-ui-1.11.4.custom.js"></script>
@@ -85,8 +86,9 @@ if($u_id){
     <link href="https://fonts.googleapis.com/css?family=Taviraj" rel="stylesheet">
 
     <!-- select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+       <!-- select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     
    <!-- bootstrap select  autocomplete -->
     <!-- <link rel="stylesheet" href="css/bootstrap-select.css">	
