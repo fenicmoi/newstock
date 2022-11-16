@@ -86,7 +86,7 @@ $(document).ready(function(){
                                          <td><?php echo $row['dep_name'];?></td>
                                          <td>
                                             <a class="btn btn-outline-warning btn-sm btn-block" 
-                                                onclick = "load_edit('<?=$row['pid']?>')" 
+                                                onclick = "load_edit('<?php echo $row['pid']?>')" 
                                                 data-toggle="modal" 
                                                 data-target="#modelEdit">
                                                 <i class="fas fa-pencil-alt"></i> 
@@ -168,36 +168,23 @@ $(document).ready(function(){
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <div class="input-group"> 
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
-                                    <input type="text" class="form-control" id="sel_year" name="sel_year"  placeholder="ปีงบประมาณ"  required="">
+                            <div class="form-group">            
+                                <div class="input-group">
+                                        <span class="input-group-addon">ชื่อโครงการ</span>
+                                        <input type="text" name="prj_name" id="prj_name" class="form-control"  required="required" title="เพิ่มชื่อโครงการ">
                                 </div>
                             </div>
 
                             <div class="form-group">            
-                                <div class="input-group mb3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">ชื่อโครงการ</span>
-                                    </div>
-                                    <input type="text" name="prj_name" id="prj_name" class="form-control"  required="required" title="เพิ่มชื่อโครงการ">
-                                </div>
-                            </div>
-
-                            <div class="form-group">            
-                                <div class="input-group mb3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">งบประมาณ</span>
-                                    </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">งบประมาณ</span>
                                     <input type="number" name="money" id="money" class="form-control" value=0 title="เพิ่มชื่อโครงการ">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">บาท</span>
-                                    </div>
+                                    <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                        <select class="form-control" name="sel_office" id="sel_office" required> 
+                                        <select class="form-control" name="sel_office" id="sel_office"  required> 
                                             <option></option>
                                         </select>
                                         <p class="form-text text-muted">
@@ -237,19 +224,26 @@ $(document).ready(function(){
 </div>
 
 
-
-
-<script>
-function load_edit(pid){
-	 var sdata = {
-         pid : pid,
-     };
-	$("#divDataview").load("admin/edit-project.php",sdata);
-}
-</script>
-<script src="js/delete-project.js"></script>
-  
-
+<!-- ################### MODEL EDIT ############################ -->
+       <!-- Modal Display Edit -->
+       <div class="modal fade" id="modelEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title"><i class="fas fa-pen"></i> แก้ไขโครงการ </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                         <div id="divDataview"></div> 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 <!--################################ Database Management System ################################ -->
 <?php 
 //เพิ่ม project
@@ -282,3 +276,15 @@ function load_edit(pid){
     }
 
 ?>
+
+
+
+<script>
+function load_edit(pid){
+	 var sdata = {
+         pid : pid,
+     };
+	$("#divDataview").load("edit-project.php",sdata);
+}
+</script>
+<script src="js/delete-project.js"></script>
