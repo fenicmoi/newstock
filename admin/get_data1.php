@@ -1,5 +1,5 @@
 <?php
-	include("library/database.php");
+	include("../library/database.php");
 	
 
 	////แสดงกลุ่มครุภัณฑ์ (group)

@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 include "header.php"; 
 $yid=chkYear();
@@ -71,7 +67,7 @@ $(document).ready(function(){
                             while ($row = dbFetchArray($result)) {?>
                                 <tr>
                                          <td><?php echo $row['pid'];?></td>
-                                         <td><a href="?menu=subproject&pid=<?=$row['pid']?>" class="text-secondary"><?php echo $row['name'];?></a></td>
+                                         <td><a href="sub_project.php?pid=<?=$row['pid']?>" class="text-secondary"><?php echo $row['name'];?></a></td>
                                          <td>
                                             <?php 
                                                 if($row['money']==0){

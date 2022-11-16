@@ -1,5 +1,5 @@
 <?php
-	include("library/database.php");
+	include("../library/database.php");
 	
 	if(isset($_GET['show_province'])){
 		

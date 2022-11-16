@@ -1,27 +1,7 @@
 <?php   
-
-//create pdf
-/*
-require_once __DIR__ . '../../vendor/autoload.php';
-
-// เพิ่ม Font ให้กับ mPDF
-$defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
-$fontData = $defaultFontConfig['fontdata'];
-$mpdf = new \Mpdf\Mpdf(['tempDir' => __DIR__ . '/tmp',
-    'fontdata' => $fontData + [
-            'sarabun' => [ // ส่วนที่ต้องเป็น lower case ครับ
-                'R' => 'THSarabunNew.ttf',
-                'I' => 'THSarabunNewItalic.ttf',
-                'B' =>  'THSarabunNewBold.ttf',
-                'BI' => "THSarabunNewBoldItalic.ttf",
-            ]
-        ],
-]);
-
-ob_start(); // Start get HTML code
-// end create pdf
-
-*/
+include "header.php"; 
+$yid=chkYear();
+$u_id=$_SESSION['ses_u_id'];
 
 
 $pid = $_GET['pid'];
@@ -34,60 +14,21 @@ $row = dbFetchAssoc($result);
 ?>
 <link rel="stylesheet" href="css/styleDelrow.css">
 
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title"><?=$row['name'];?></h4>
-                    <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">เจ้าของโครงการ</span>
-                            </div>
-                            <input type="text"  class="form-control" value="<?=$row['uid'];?>" disabled>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">แหล่งงบประมาณ</span>
-                            </div>
-                            <input type="text" value="<?php echo $row['owner'];?>">
-                    </div>
-
-                    <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text text-weight-bold" id="basic-addon1">ปีงบประมาณ</span>
-                            </div>
-                            <input type="text"  class="form-control col-1" value="<?=$row['yname'];?>" disabled>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="basic-addon1">งบประมาณ</span>
-                            </div>
-                            <input type="text"  class="form-control col-1" value="<?=number_format($row['money']);?>" disabled>
-                            &nbsp;
-                    </div>
-                </div>
-            </div>
-        </div><!-- col-md-12 -->
-    </div><!-- row  -->
-</div>
-
-
-
-<div class="container-fluid">
-<div class="row  mt-2">
-        <div class="col-md-12">
-            <div class="card">
-                <div class ="card-header bg-secondary text-white">
-                    <span class="font-weight-bold"><i class="fas fa-th"></i>  รายการทรัพย์สินโครงการ</span>
-                    <a href="?menu=project" class="btn btn-primary  float-right">
-                        <i class="fas fa-home"></i> กลับหน้าโครงการ
-                    </a>
-                    <!-- <a class="btn btn-info float-right" href="report1.php?pid=<?=$pid?>" target="_blank"><i class="fas fa-print"></i> พิมพ์รายงาน</a> -->
-                    <button type="button" class="btn btn-warning  float-right" data-toggle="modal" data-target="#modelId">
+<div class="row">
+    <div class="col-md-2">
+        <?php
+            $menu=  checkMenu($level_id);
+            include $menu;
+        ?>
+    </div>
+    <div class="col-md-10">
+        <div class="panel panel-primary" style="margin: 10">
+                <div class="panel-heading">ชื่อโครงการ : <strong><?php echo $row['name']?></strong>
+                <button type="button" class="btn btn-warning  float-right" data-toggle="modal" data-target="#modelId">
                         <i class="fas fa-plus"></i> เพิ่มรายการ
                     </button>
-                </div>
-                
-                <div class="card-body">
-                   <table class="table table-striped table-bordered" id="myTable">
+				</div> 
+                <table class="table table-striped table-bordered" id="myTable">
                        <thead class="thead-inverse">
                            <tr>
                                <th><h6>ที่</h6></th>
@@ -147,11 +88,11 @@ $row = dbFetchAssoc($result);
                                 ?>
                            </tbody>
                    </table>
-                </div>
-            </div>
-        </div><!-- col-md-12 -->
-    </div><!-- row  -->
-</div> <!-- container 2 -->
+
+                
+        </div> <!-- panel -->
+    </div> <!-- col-md -->
+    </div><!-- row -->
 
 <!-- Modal Display Edit -->
 <div class="modal fade" id="modelEdit" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -190,6 +131,6 @@ function load_edit(sid){
 
 
 
-<script src="js/tree-view.js"></script>
-<script src="js/delete-subproject.js"></script>
+<script src="../js/tree-view.js"></script>
+<script src="../js/delete-subproject.js"></script>
 
