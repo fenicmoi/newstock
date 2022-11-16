@@ -125,7 +125,7 @@ function load_edit(sid){
 	 var sdata = {
          sid : sid,
      };
-	$("#divDataview").load("admin/edit-supproject.php",sdata);
+	$("#divDataview").load("edit-supproject.php",sdata);
 }
 </script>
 
