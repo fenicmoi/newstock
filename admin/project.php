@@ -1,3 +1,7 @@
+
+
+
+
 <?php
 include "header.php"; 
 $yid=chkYear();
@@ -33,9 +37,9 @@ $(document).ready(function(){
     <div class="col-md-10">
         <div class="panel panel-primary" style="margin: 10">
                 <div class="panel-heading"><i class="fas fa-cart-plus fa-2x"></i>   <strong>เพิ่มโครงการ</strong>
-                    <a href="add_object.php" class="btn btn-default  pull-right" data-toggle="modal" data-target="#modelId"><i class="fa fa-plus" aria-hidden="true"></i> เพิ่ม=ชนิดครุภัณฑ์</a>
+                    <a href="add_object.php" class="btn btn-default  pull-right" data-toggle="modal" data-target="#modelId"><i class="fa fa-plus" aria-hidden="true"></i> เพิ่มโครงการ</a>
 				</div> 
-                 <table class="table table-bordered table-hover table-striped" id="myTable">
+                 <table class="table table-bordered table-hover table-striped" id="tbProject">
                         <thead class="bg-secondary text-white">
                             <th>ID ระบบ</th>
                             <th>ชื่อโครงการ/กิจกรรม</th>
@@ -48,17 +52,21 @@ $(document).ready(function(){
                         <tbody>
                         <?php   
 
-                               $sql = "SELECT * FROM project ORDER BY pid DESC";
+                                // $sql = "SELECT * FROM project ORDER BY pid  DESC";
 
-                                
-                                // $sql ="SELECT  p.*, y.yname, d.dep_name FROM project  p
-                                // INNER JOIN  sys_year  y   ON (p.yid = y.yid) 
-                                // INNER JOIN depart as d ON (p.dep_id = d.dep_id)
-                                // WHERE del = 1 
-                                // ORDER BY  pid DESC";
-                                
+                                $sql = "SELECT p.*, y.yname, d.dep_name FROM project as p 
+                                        INNER JOIN  sys_year as y  ON (p.yid = y.yid)
+                                        INNER JOIN  depart as d  ON (p.dep_id = d.dep_id)
+                                        ORDER BY pid DESC";
+                                /*
+                                 $sql ="SELECT  p.*, y.yname, d.dep_name FROM project  p
+                                 INNER JOIN  sys_year  y   ON (p.yid = y.yid) 
+                                 INNER JOIN depart as d ON (p.dep_id = d.dep_id)
+                                 WHERE del = 1 
+                                 ORDER BY  pid DESC";
+                                */
                              
-                          echo $sql;
+                           // echo $sql;
                             $result = dbQuery($sql);
                             while ($row = dbFetchArray($result)) {?>
                                 <tr>
@@ -74,8 +82,8 @@ $(document).ready(function(){
                                                 
                                             ?>
                                         </td>
-                                         <td><?php echo $row['yid'];?></td>
-                                         <td><?php echo $row['dep_id'];?></td>
+                                         <td><?php echo $row['yname'];?></td>
+                                         <td><?php echo $row['dep_name'];?></td>
                                          <td>
                                             <a class="btn btn-outline-warning btn-sm btn-block" 
                                                 onclick = "load_edit('<?=$row['pid']?>')" 
@@ -123,15 +131,16 @@ $(document).ready(function(){
 
                 <div class="modal-body">
                     <form method="post">
-                            <div class="form-group">
-                            <div class="input-group"> 
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
-                                <input type="text" class="form-control" id="sel_year" name="sel_year"  placeholder="ปีงบประมาณ"  required="">
-                            </div>
-                            </div>
+                            <!-- <div class="form-group">
+                                <div class="input-group"> 
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
+                                    <input type="text" class="form-control" id="sel_year" name="sel_year"  placeholder="ปีงบประมาณ"  required="">
+                                </div>
+                            </div> -->
+
                             <div class="form-group">
                                 <div class="input-group">
-                                    <span class="input-group-                                                                                                                                                                                                                                                                                                                                                                                                                                                                ">ปีงบประมาณ</span>
+                                    <span class="input-group-prepend">ปีงบประมาณ</span>
                                 </div>
                                 <select class="form-control col-4" name="sel_year" id="sel_year">
                                 <?php    
@@ -156,6 +165,13 @@ $(document).ready(function(){
                                         <option value="งบกลุ่มจังหวัด">งบกลุ่มจังหวัด</option>
                                         <option vlaue="งบเศรษฐกิจฐานราก">งบเศรษฐกิจฐานราก</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group"> 
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-list"></span></span>
+                                    <input type="text" class="form-control" id="sel_year" name="sel_year"  placeholder="ปีงบประมาณ"  required="">
                                 </div>
                             </div>
 
@@ -233,3 +249,36 @@ function load_edit(pid){
 </script>
 <script src="js/delete-project.js"></script>
   
+
+<!--################################ Database Management System ################################ -->
+<?php 
+//เพิ่ม project
+    if(isset($_POST['save'])){
+        $yid = $_POST['sel_year'];
+        
+        $sql =  "SELECT recid FROM project WHERE yid=$yid";
+        $result = dbQuery($sql);
+        $num = dbNumRows($result);
+        $num++;
+
+        $name = $_POST['prj_name'];
+        $money = $_POST['money'];
+        $dep_id = $_POST['sel_office'];
+        $owner = $_POST['owner'];    //งบจังหวัด
+        
+
+        $sql = "INSERT INTO project(recid, name, money, yid, dep_id, owner) VALUES($num, '$name', $money, $yid, '$dep_id', '$owner')";
+        print $sql;
+        $result =  dbQuery($sql);
+
+    
+        if($result){
+            echo "<script>alert('บันทึกโครงการเรียบร้อยแล้ว')</script>";
+            echo "<META HTTP-EQUIV='Refresh' Content='0'; URL='?menu=project'>";
+        }else{
+            echo "<script>alert('มีบางอย่างผิดพลาด  กรุณาติดต่อ Admin')</script>";
+        }
+        
+    }
+
+?>

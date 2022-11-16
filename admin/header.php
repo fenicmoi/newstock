@@ -98,11 +98,21 @@ if($u_id){
 
 
     <script type="text/javascript" src="../js/jquery.alphanumeric.js"></script>
+
     <script>
+
+    // $(document).ready( function () {
+    //     $('#myTable').DataTable();
+    // } );
+    
     $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
-</script>
+        $('#tbProject').DataTable({
+            order: [[0,'desc']],
+        });
+    });
+
+
+    </script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
